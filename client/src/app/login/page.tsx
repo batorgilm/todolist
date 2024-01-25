@@ -4,6 +4,7 @@ import { SizeEnum, Title } from '@/components/Title';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import jwt from 'jsonwebtoken';
 
 const Page = () => {
   const router = useRouter();
@@ -24,11 +25,12 @@ const Page = () => {
         ...input,
       });
 
-      localStorage.setItem('user', JSON.stringify(data.user));
+      localStorage.setItem('token', JSON.stringify(data.token));
 
       router.push('/dashboard');
     } catch (error: any) {
-      setError(error.response.data.msg);
+      console.log(error);
+      setError(JSON.stringify(error));
     }
   };
 

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import { UserModel } from '../model/User';
 
 type SignUpType = {
@@ -64,7 +65,10 @@ export const login = async (req: Request, res: Response) => {
           msg: 'Username or password incorrect',
         });
       } else {
-        return res.send({ success: true, user });
+        const SECRET_KEY = 'orgil123';
+        const token = jwt.sign({ ...user }, SECRET_KEY);
+
+        return res.send({ success: true, token });
       }
     });
   } catch (error) {
